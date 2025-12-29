@@ -24,6 +24,18 @@ jobs:
       - name: 📦 Instalar dependências
         run: npm install
 
+      - name: Install Cypress binary
+        run: npx cypress install
+
+      - name: Cache Cypress binary
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            cypress-${{ runner.os }}-
+
+
       - name: 🧪 Executar testes de componentes
         run: npx cypress run --component
 
